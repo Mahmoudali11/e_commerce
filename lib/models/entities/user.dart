@@ -29,6 +29,7 @@ class UserProfiles extends ChangeNotifier{
 
 
   UserProfile userProfile;
+  List<UserProfile> users;
 
   FirebaseFirestore firebaseFirestore=FirebaseFirestore.instance;
   Future getUserProfile(String  currentusrid)async{
@@ -37,6 +38,19 @@ class UserProfiles extends ChangeNotifier{
    final c=b.map((e) => UserProfile.formJson(e)).toList();
    userProfile=c[0];
    notifyListeners();
+
+  }
+ Future<List<UserProfile>> getUsersProfile()async{
+
+   
+   final a=   await firebaseFirestore.collection("users").get();
+   final b=a.docs;
+   final c=b.map((e) => UserProfile.formJson(e)).toList();
+   users=c;
+   
+   notifyListeners();
+   print("getusers");
+   return users;
 
   }
 

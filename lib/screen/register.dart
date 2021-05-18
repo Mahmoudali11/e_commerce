@@ -1,9 +1,12 @@
+import 'package:e_commerce/screen/login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:e_commerce/models/auth_provider.dart';
 import 'package:e_commerce/widget/custom_button.dart';
 import 'package:e_commerce/screen/home.dart';
 import 'package:e_commerce/widget/custom_form_filed.dart';
+import 'package:e_commerce/generated/l10n.dart';
 
 class Rergister extends StatefulWidget {
   @override
@@ -16,7 +19,8 @@ class _RergisterState extends State<Rergister> {
   TextEditingController pass = TextEditingController();
   TextEditingController confirmPass = TextEditingController();
   TextEditingController name = TextEditingController();
-
+  TextEditingController phone=TextEditingController();
+  final sk = GlobalKey<ScaffoldState>();
   bool isviv = false;
   @override
   void initState() {
@@ -26,6 +30,7 @@ class _RergisterState extends State<Rergister> {
   @override
   Widget build(BuildContext context) {
     final authState = Provider.of<Auth>(context);
+    final lang = S.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("wlcome"),
@@ -35,42 +40,65 @@ class _RergisterState extends State<Rergister> {
           child: Form(
             key: formkey,
             child: SingleChildScrollView(
-                        child: Column(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  
-                      CustomeFormField(name, false, "name required", "enter your full name",
-                      Icons.person, TextInputType.emailAddress)
-                  ,
-                  CustomeFormField(email, false, "email required", "enter email",
+                  CustomeFormField(name, false, "name required", lang.name,
+                      Icons.person, TextInputType.emailAddress),
+                  CustomeFormField(email, false, "email required", lang.email,
                       Icons.email, TextInputType.emailAddress),
-                  CustomeFormField(pass, false, "pass required", "enter pass",
-                      Icons.enhanced_encryption, TextInputType.visiblePassword),
-                      CustomeFormField(confirmPass, false, "confirm pass", "enter passl",
-                      Icons.enhanced_encryption, TextInputType.visiblePassword),
-                 
-                  custmoButton(Text("signup"), () async {
+                  CustomeFormField(pass, false, "pass required", lang.pass,
+                  Icons.enhanced_encryption, TextInputType.visiblePassword),
+                  CustomeFormField(
+                      confirmPass,
+                      false,
+                      "confirm pass",
+                      lang.confirmp,
+                      Icons.enhanced_encryption,
+                      TextInputType.visiblePassword),
+                       CustomeFormField(phone, false, "phone no required", lang.phone,
+                      Icons.phone, TextInputType.phone),
+                      Text("we'll send email verf link"),
+
+                  custmoButton(Text(lang.signup), () async {
                     if (formkey.currentState.validate()) {
-                      try {
-                       authState.signUp(email.text,pass.text,name.text).then((value) {
-                           if (value!= null)
-                          Navigator.pushReplacement(context,
-                              MaterialPageRoute(builder: (context) {
-                            return MyHomePage();
-                          }));
-                          print(" @@@@@@@@@Successfull process !user id is $value");
-                     return ;
-                        });
-
-                       
-                      } catch (e) {
-                                              print(e.toString());
-
+                      if (pass.text != confirmPass.text) {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(SnackBar(content: Text("")));
+                        return;
                       }
+                      try {
+                        authState
+                            .signUp(email.text, pass.text, name.text,phone.text)
+                            .then((value) async {
+                           if (value != null) {
+                            await authState.logIn(email.text, pass.text);
+                       User user=     FirebaseAuth.instance.currentUser;
 
+                            if(!user.emailVerified){
 
-                    } 
-                  }, null)
+                        await user.sendEmailVerification();
+                         Navigator.pushReplacement(context,
+                                MaterialPageRoute(builder: (context) {
+                              return Login();
+                            }));
+                            return;
+                            }
+
+                            Navigator.pushReplacement(context,
+                                MaterialPageRoute(builder: (context) {
+                              return MyHomePage();
+                            }));
+                          }
+                          print(
+                              " @@@@@@@@@Successfull process !user id is $value");
+                          //   return ;
+                        });
+                      } catch (e) {
+                        print(e.toString());
+                      }
+                    }
+                  }, null, context)
                 ],
               ),
             ),

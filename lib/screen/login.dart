@@ -1,11 +1,16 @@
 import 'package:e_commerce/models/auth_provider.dart';
+import 'package:e_commerce/screen/appNavigation.dart';
 import 'package:e_commerce/screen/home.dart';
 import 'package:e_commerce/screen/register.dart';
+import 'package:e_commerce/screen/resetpassword.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce/widget/custom_form_filed.dart';
 import 'package:e_commerce/widget/custom_button.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:e_commerce/Theme/style.dart';
+import 'package:e_commerce/generated/l10n.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -25,6 +30,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     final authState = Provider.of<Auth>(context);
+    final lang=S.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("wlcome"),
@@ -36,36 +42,45 @@ class _LoginState extends State<Login> {
             mainAxisAlignment: MainAxisAlignment.center,
             
             children: [
-              CustomeFormField(email, false, "email required", "enter email",
+              CustomeFormField(email, false, "email required", lang.email,
                   Icons.email, TextInputType.emailAddress),
-              CustomeFormField(pass, false, "pass required", "enter pass",
+              CustomeFormField(pass, false, "pass required", lang.pass,
                   Icons.enhanced_encryption, TextInputType.visiblePassword),
-              custmoButton(Text("Login"), () async {
+              custmoButton(Text(lang.login), () async {
                 if (formkey.currentState.validate()) {
                   try {
                     String id = await authState.logIn(email.text, pass.text);
+                    User user=FirebaseAuth.instance.currentUser;
+
+                    if(!user.emailVerified){
+                  Fluttertoast.showToast(msg: "verfiy your email");
+                  return;
+
+
+                    }
                     if (id != null)
                       Navigator.pushReplacement(context,
                           MaterialPageRoute(builder: (context) {
-                        return MyHomePage();
+                        return AppNaigation();
                       }));
                   } catch (e) {}
                 } else {}
-              }, null),
+              }, null,context),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Create Account?"),
-                  TextButton(onPressed: (){
-                     Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return Rergister();
-                      }));
+              TextButton(onPressed: (){
+                Navigator.push(context,
+                     MaterialPageRoute(builder: (context) {
+                   return Rergister();
+                 }));
 
-                  }, child: Text("Yes",style: style,))
-                ],
-              )
+                  }, child: Text(lang.createaccount,)),
+               TextButton(onPressed: (){
+                 Navigator.push(context,
+                      MaterialPageRoute(builder: (context) {
+                    return ResetPassword();
+                  }));
+
+              }, child: Text(lang.forget))
             ],
           ),
         ),

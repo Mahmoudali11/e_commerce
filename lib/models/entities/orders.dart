@@ -14,6 +14,7 @@ String phone;
 String size;
 String desc;
 String name;
+
 Order({this.size,this.imgurl,this.price,this.address,this.date,this.phone,this.pid,this.uid,this.who,this.desc,this.name});
 
 Order.fromJson(DocumentSnapshot json){
@@ -34,7 +35,7 @@ Order.fromJson(DocumentSnapshot json){
 }
 
 
-Map toJson(){
+Map<String,dynamic>toJson(){
 return{"uid":uid,"productid":pid,"size":size,"name":name,"phone":phone,"date":date,"img":imgurl,"address":address,"price":price,"who":who,"desc":desc};
 
 
@@ -73,6 +74,27 @@ class Orders extends ChangeNotifier{
 
 
   }
+  Future<List<Order>> getOrders()async{
+
+    final fs=await  firebaseFirestore.collection("orders").get();
+    final doc=fs.docs;
+    orders=doc.map((e) => Order.fromJson(e)).toList();
+   //notifyListeners();
+    return orders;
+
+
+
+
+
+
+  }
+  Future deleteOrder(String id)async{
+
+
+    await firebaseFirestore.collection("orders").doc(id).delete();
+    notifyListeners();
+  }
+
 
 
 

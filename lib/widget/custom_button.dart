@@ -1,8 +1,23 @@
+ 
 import 'package:flutter/material.dart';
 
-Widget custmoButton(Text txt,Function function,Decoration v){
+Widget custmoButton(Text txt,Function function,Decoration v,BuildContext context){
 
 
 
-  return ElevatedButton(onPressed:function, child: txt,style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.teal)),);
+  return SizedBox(
+    width: 150,
+    child: ElevatedButton(onPressed:function, child: txt,style:  ElevatedButton.styleFrom(
+      primary: Theme.of(context).buttonColor,
+ 
+elevation: 3,
+shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))
+
+
+    ),
+    
+    
+    
+    ),
+  );
 }

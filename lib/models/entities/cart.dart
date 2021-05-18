@@ -21,7 +21,7 @@ class MyCart{
 name=json["name"];
 desc=json["desc"];
 size=json["size"];
-price=json["prices"];
+price=json["price"];
 img=json["img"];
 orderdate=json["date"];
 

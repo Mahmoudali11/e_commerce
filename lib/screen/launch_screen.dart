@@ -1,4 +1,5 @@
 import 'package:e_commerce/Theme/style.dart';
+import 'package:e_commerce/screen/appNavigation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:e_commerce/screen/home.dart';
@@ -19,14 +20,14 @@ class _LaunchScreenState extends State<LaunchScreen> {
  
 final x=Provider.of<Auth>(context,listen: false);
  var route;
-   Future.delayed(Duration(seconds:1),()async{
-   await x.getUser();
- 
+   Future.delayed(Duration(seconds:2),()async{
+    x.getUser();
+   User user =FirebaseAuth.instance.currentUser;
               
-             if(x.user!=null)
+             if(x.user!=null&&user.emailVerified)
     route =MaterialPageRoute(builder: (context){
       print(x);
-           return MyHomePage();
+           return AppNaigation();
          });
          else{
            route =MaterialPageRoute(builder: (context){
@@ -60,7 +61,7 @@ final x=Provider.of<Auth>(context,listen: false);
        return Scaffold(
               body: Center(
                 child: Container(
-         child: Text("Welcome",style: style,)
+         child: Text("Welcome",)
 
         
          

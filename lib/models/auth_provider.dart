@@ -29,7 +29,13 @@ class Auth extends ChangeNotifier{
 
   }
  Future<String> logIn(String u,String p)async{
-UserCredential authuser=await  _firebaseAuth.signInWithEmailAndPassword(email: u, password: p);
+UserCredential authuser;
+
+   try{
+  authuser=await  _firebaseAuth.signInWithEmailAndPassword(email: u, password: p);}
+catch(e){
+print("error");
+}
 
 
 notifyListeners();
@@ -37,11 +43,15 @@ return authuser.user.uid;
 
 
 }
-Future<String> signUp(String u,String p,String name)async{
+Future<void> sendPasswordResetEmail(String email) async {
+     _firebaseAuth.sendPasswordResetEmail(email: email);
+    notifyListeners();
+  }
+Future<String> signUp(String u,String p,String name,String phone)async{
 UserCredential authuser;
 //use await is useful to sure if statement complet or not
    await _firebaseAuth.createUserWithEmailAndPassword(email: u, password: p).then((value){
-  firebaseFirestore.collection("users").add({"uid":value.user.uid,"name":name,"email":u});
+  firebaseFirestore.collection("users").add({"uid":value.user.uid,"name":name,"email":u,"phone":phone});
 
 
 authuser=value;

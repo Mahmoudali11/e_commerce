@@ -72,6 +72,7 @@ class _CustomeFormFieldState extends State<CustomeFormField> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
+      
         obscureText:
             textInputType == TextInputType.visiblePassword ? !isviv : false,
         controller: a,
@@ -79,7 +80,7 @@ class _CustomeFormFieldState extends State<CustomeFormField> {
         decoration: InputDecoration(
             icon: Icon(
               m,
-              color: Colors.grey,
+              color: Theme.of(context).iconTheme.color,
             ),
             hintText: hint,
             suffixIcon: textInputType == TextInputType.visiblePassword

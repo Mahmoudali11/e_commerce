@@ -1,0 +1,30 @@
+{
+
+    "login":"LogIn",
+    "products":"Produts",
+    "language":"English",
+    "logout":"LogOut",
+"productm":"Prouducts Managment",
+"name":"Name: ",
+"price":"Price: ",
+"desc":"Describtion: ",
+"availablesizes":"Available Sizes: ",
+"buyingdate":"Buying Date: ",
+"adress":"Adress: ",
+"add":"Add",
+"size":"Size: ",
+"buy":"AddToCart",
+"allreadyinyourcard":"allready in your card!",
+"cancel":"cancel",
+"email":"email",
+"pass":"password",
+"confirmp":"confirm password",
+"passnotidentical":"password are not identical",
+"createaccount":"Don't have account? ",
+"yes":"yes",
+"signup":"SignUp",
+"phone":"Mobile Number",
+"noproducts":"your cart is empty!",
+"forget":"Forget Password?"
+
+}
