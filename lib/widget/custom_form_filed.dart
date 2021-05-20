@@ -78,6 +78,8 @@ class _CustomeFormFieldState extends State<CustomeFormField> {
         controller: a,
         keyboardType: textInputType,
         decoration: InputDecoration(
+          enabledBorder: InputBorder.none,
+
             icon: Icon(
               m,
               color: Theme.of(context).iconTheme.color,

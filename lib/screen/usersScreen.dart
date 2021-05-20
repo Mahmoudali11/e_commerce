@@ -69,8 +69,7 @@ class UsersScreen extends StatelessWidget {
    print("from users screeen");
 final user=FirebaseFirestore.instance.collection("users");
     return Scaffold(
-      appBar: AppBar(),
-      body: FutureBuilder<List<UserProfile>>(future:users.getUsersProfile(),
+       body: FutureBuilder<List<UserProfile>>(future:users.getUsersProfile(),
       
       
       builder:(context,snapshot){

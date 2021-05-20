@@ -6,14 +6,15 @@ import 'package:e_commerce/models/entities/user.dart';
 import 'package:e_commerce/widget/custom_button.dart';
 import 'package:e_commerce/models/entities/cart.dart';
 import 'package:e_commerce/widget/custom_form_filed.dart';
-import '';
+import 'package:place_picker/entities/localization_item.dart';
+import 'package:place_picker/place_picker.dart';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:e_commerce/generated/l10n.dart';
-import '';
+import 'package:geolocator/geolocator.dart';
 
 class ProductDetails extends StatefulWidget {
   Product product;
@@ -43,6 +44,7 @@ for( var i in a){
   return false;
  
   }
+  
   
   @override
   Widget build(BuildContext context) {
@@ -149,11 +151,40 @@ class _AddotCardAlertState extends State<AddotCardAlert> {
      
 
 _AddotCardAlertState({this.product});
+Future<Position> _getUserLocation() async {
+    LocationPermission permission;
+    bool serviceEnabled;
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error("@@@@@@@@@@@@@@@location sevice is disabled");
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      /// this show ui to get user permission
+      print("enter permission");
+      permission = await Geolocator.requestPermission();
+
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    ///if no one of apove return current location
+    return await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.best);
+  }
+  Position p;
 @override
 void initState() {
-    // TODO: implement initState
-    // 
-    // 
+_getUserLocation().then((value) {p=value;
+
+setState(() {
+  
+});
+}
+
+);
     size=product.size[0];
     super.initState();
   }
@@ -187,22 +218,24 @@ void initState() {
                   child: Column(children: [
      //  CustomeFormField(addres,true,"required",lang.adress,Icons.location_on_outlined,TextInputType.streetAddress),
      TextFormField(
-       onTap: (){
+       
+       onTap: ()async{
 
-      //            Navigator.push(
-      // context,
-      // MaterialPageRoute(
-      //   builder: (context) => PlacePicker(
-      //     apiKey: APIKeys.apiKey,   // Put YOUR OWN KEY here.
-      //     onPlacePicked: (result) { 
-      //       print(result.address); 
-      //       Navigator.of(context).pop();
-      //     },
-      //     initialPosition: HomePage.kInitialPosition,
-      //     useCurrentLocation: true,
-      //   ),
-    //  ),
-   // );
+
+         Position m=await _getUserLocation();
+ LocationResult result = await Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) =>
+            PlacePicker("AIzaSyC3FEo_7bksnMhiBfGiZ9ruvW7c3bxRf2Y",
+                        displayLocation: LatLng(m.latitude,m.longitude),
+                        
+                        )));
+addres.text= "${result.name },${result.city.name}";
+
+    // Handle the result in your way
+    print(result.name);
+    setState(() {
+  
+});
 
        },
        readOnly: true,

@@ -1,13 +1,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.e_commerce">
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
    <application
         android:label="e_commerce"
         android:icon="@mipmap/ic_launcher"
         android:requestLegacyExternalStorage="true">
+
         
  
     <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="YOUR KEY HERE"/>
+               android:value="AIzaSyC3FEo_7bksnMhiBfGiZ9ruvW7c3bxRf2Y"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

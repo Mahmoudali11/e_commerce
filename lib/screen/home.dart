@@ -94,21 +94,26 @@ class _MyHomePageState extends State<MyHomePage> {
           ,children: [
           
            Container(
-             padding: const EdgeInsets.all(30),
+             padding: const EdgeInsets.only(top:50,left: 20,bottom: 50),
              
             width: double.maxFinite,
             decoration: BoxDecoration(
+              boxShadow: [
+BoxShadow(color:Colors.grey,blurRadius: 3,spreadRadius: 5)
+
+
+              ],
                           color:Theme.of(context).primaryColor,
 
 
-              borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))
+              borderRadius: BorderRadius.only(bottomRight: Radius.circular(100))
             ),
             
             
             child: Row(
               children: [
                 CircleAvatar(backgroundImage: AssetImage("assets/pick.PNG"),radius: 30,),
-                SizedBox(width:10), Text( userdata.userProfile.name,style: styleh,),
+                SizedBox(width:10), Flexible(child: Text( userdata.userProfile.name,style: styleh,overflow: TextOverflow.ellipsis,)),
           
         //  Text( userdata.userProfile.email,style: style2,),
               ],

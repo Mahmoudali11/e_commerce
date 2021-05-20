@@ -7,7 +7,7 @@ const styleh=TextStyle(color:Colors.white,fontSize:20);
 const styleh2=TextStyle(color:Colors.black,fontSize:20);
 const padgcolor=Color(0xff2A9D8E);
 final them=ThemeData(backgroundColor: Colors.white,
-primaryColor: Color(0xff264653),
+ primaryColor: Color(0xff264653),
 //scaffoldBackgroundColor: Color(0xffF0FAEF),
 scaffoldBackgroundColor: Color(0xffF6F7F9),
 //primarySwatch: Colors.yellow,

@@ -54,7 +54,7 @@ class AppNaigation extends StatefulWidget {
            ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.red,
+        selectedItemColor: Theme.of(context).primaryColor,
         onTap:(v){
           _onItemTapped(v);
 
