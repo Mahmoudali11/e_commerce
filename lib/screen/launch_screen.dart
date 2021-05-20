@@ -61,7 +61,7 @@ final x=Provider.of<Auth>(context,listen: false);
        return Scaffold(
               body: Center(
                 child: Container(
-         child: Text("Wasal",style: TextStyle(fontFamily: "Lobster",fontWeight: FontWeight.bold,fontSize: 30,color: Theme.of(context).primaryColor),)
+         child: Text("Wasal ",style: TextStyle(fontFamily: "Lobster",fontWeight: FontWeight.bold,fontSize: 30,color: Theme.of(context).primaryColor),)
 
         
          
