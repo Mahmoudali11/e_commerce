@@ -60,6 +60,7 @@ for( var i in a){
         child: Card(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
       
     
@@ -70,33 +71,16 @@ for( var i in a){
       fit: BoxFit.fill,
     ),
     
-    Row(
-      children: [
-            Text(lang.name, ),
-            //Spacer(),
-            Text(product.name,style: style2,),
-      ],
-    ),
-    Row(
-      children: [
-            Text(lang.desc,),
-           // Spacer(),
-            Text(product.desc,style: style2,),
-      ],
-    ),
-    Row(
-      children: [
-            Text(lang.price,),
-       //   Spacer(),
-            Text(product.price,style: style2,),
-      ],
-    ),
-    Row(
-      children: [
-            Text(lang.availablesizes),
-          Text(product.size.toString())
-      ],
-    ),
+    
+         Text(lang.name+product.name,style: style2,),
+
+            // Spacer(),
+    Text(lang.desc+product.desc,style: style2,),
+        //   Spacer(),
+    Text(lang.price+product.price,style: style2,),
+    
+               Text(lang.availablesizes+":"+product.size.toString()),
+
                 Center(
       child: custmoButton(Text(lang.buy), ()async {
 
@@ -267,34 +251,40 @@ addres.text= "${result.name },${result.city.name}";
 
 
             ),
-      actions: [custmoButton(Text(lang.add), ()async{
+      actions: [SizedBox(
+        width: 100,
+        child: custmoButton(Text(lang.add), ()async{
 
 
-            if(k.currentState.validate()){
+              if(k.currentState.validate()){
     final date=DateFormat.yMd().add_jm().format(DateTime.now()).toString(); 
-            await userinf.getUserProfile(Provider.of<Auth>(context,listen: false).user.uid);
+              await userinf.getUserProfile(Provider.of<Auth>(context,listen: false).user.uid);
 
     final order=Order(phone: userinf.userProfile.phone,size:size.toString(),price: product.price,desc: product.desc,name: product.name,pid: product.id,imgurl: product.imgurl,address:addres.text ,uid: userinf.userProfile.uid,date: date,who: userinf.userProfile.name);
 
-       await addtocard.addOrder(order);
+         await addtocard.addOrder(order);
 
     print("data added");
      Provider.of<MyCarts>(context,listen: false).getCarts(Provider.of<Auth>(context,listen: false).user);
 
-       Navigator.of(context).pop();
+         Navigator.of(context).pop();
 
 
 
 
 
-            }
+              }
 
 
 
-      }, null,context),custmoButton(Text(lang.cancel), (){
-                   Navigator.of(context).pop();
+        }, null,context),
+      ),SizedBox(
+        width: 100,
+        child: custmoButton(Text(lang.cancel), (){
+                     Navigator.of(context).pop();
 
-      }, null,context)],
+        }, null,context),
+      )],
       
     ),
         );

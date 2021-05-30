@@ -54,7 +54,7 @@ class AddProductScreen extends StatelessWidget {
  
                             children:[ Container(width:x ,
                 
-                child:p.img!=null? Image.file(p.img): Image.asset("assets/pick.PNG",fit: BoxFit.fill,) ,
+                child:p.img!=null? Image.file(p.img): Image.asset("assets/pick1.PNG",fit: BoxFit.fill,) ,
                 decoration: BoxDecoration(color: Colors.grey),
                 
                 

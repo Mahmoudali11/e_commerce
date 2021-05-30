@@ -88,15 +88,15 @@ final user=FirebaseFirestore.instance.collection("users");
 
 
 
-            return Card(
-
-
-              child:ListTile(
-
-                      leading:CircleAvatar(child: Icon(Icons.person),),
-                      title: Text(snapshot.data[index].name),
-                      subtitle: Text(snapshot.data[index].email),
-                      onTap: (){
+            return Padding(
+              padding: const EdgeInsets.all(3.0),
+              child: Container(
+                color: Theme.of(context).backgroundColor,
+                child: ListTile(
+                         leading:CircleAvatar(backgroundImage:AssetImage("assets/pick.PNG")),
+                        title: Text(snapshot.data[index].name),
+                        subtitle: Text(snapshot.data[index].email),
+                        onTap: (){
 
      final route=MaterialPageRoute(builder: (context){
 
@@ -105,12 +105,12 @@ final user=FirebaseFirestore.instance.collection("users");
 Navigator.push(context, route);
 
 
-                      },
+                        },
 
 
 
-              )
-
+                ),
+              ),
             );
           },itemCount: snapshot.data.length);
 
